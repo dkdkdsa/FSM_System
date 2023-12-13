@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,27 @@ namespace FSM_System
 
         }
 
+        public TCompo GetComponent<TCompo>()
+        {
+
+            return controller.GetComponent<TCompo>();
+
+        }
+
+        public Coroutine StartCoroutine(IEnumerator coroutine)
+        {
+
+            return controller.StartCoroutine(coroutine);
+
+        }
+
+        public void StopCoroutine(Coroutine coroutine)
+        {
+
+            controller.StopCoroutine(coroutine);
+
+        }
+
         public void Enter()
         {
 
@@ -45,7 +67,19 @@ namespace FSM_System
         public void Update()
         {
 
-            UpdateState();
+            foreach(var trans in transitionContainer)
+            {
+
+                trans.RunTransition();
+
+            }
+
+            if (!isControllRelesed)
+            {
+
+                UpdateState();
+
+            }
 
         }
 

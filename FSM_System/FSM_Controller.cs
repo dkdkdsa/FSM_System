@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FSM_System
 {
 
-    public delegate void StateChanged<T>(T oldState, T newState) where T : Enum;
+    public delegate void FSM_StateChanged<T>(T oldState, T newState) where T : Enum;
 
     public class FSM_Controller<T> : MonoBehaviour where T : Enum
     {
@@ -17,7 +17,7 @@ namespace FSM_System
 
         protected T currentState;
 
-        public event StateChanged<T> OnStateChanged;
+        public event FSM_StateChanged<T> OnStateChanged;
 
         public T CurrentState => currentState;
 
@@ -79,6 +79,20 @@ namespace FSM_System
             currentStateObject.Enter();
 
             OnStateChanged?.Invoke(oldState, state);
+
+        }
+
+        public FSM_State<T> GetState(T type) 
+        {
+
+            return stateContainerByEnum[type];
+
+        }
+
+        public TState GetState<TState>() where TState : FSM_State<T>
+        {
+
+            return stateContainerByType[typeof(TState)] as TState;
 
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,20 @@ namespace FSM_System
                 controller.ChangeState(nextState);
 
             }
+
+        }
+
+        public TCompo GetComponent<TCompo>()
+        {
+
+            return controller.GetComponent<TCompo>();
+
+        }
+
+        public Coroutine StartCoroutine(IEnumerator coroutine)
+        {
+
+            return controller.StartCoroutine(coroutine);
 
         }
 
