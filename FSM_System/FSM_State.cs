@@ -86,6 +86,13 @@ namespace FSM_System
         protected virtual void EnterState() { }
         protected virtual void ExitState() { }
         protected virtual void UpdateState() { }
+        
+        public void AddTransition(FSM_Transition<T> transition)
+        {
+
+            transitionContainer.Add(transition);
+
+        }
 
     }
 

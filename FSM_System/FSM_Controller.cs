@@ -11,7 +11,6 @@ namespace FSM_System
     {
 
         private Dictionary<T, FSM_State<T>> stateContainerByEnum = new Dictionary<T, FSM_State<T>>();
-        private Dictionary<Type, FSM_State<T>> stateContainerByType = new Dictionary<Type, FSM_State<T>>();
 
         private FSM_State<T> currentStateObject => stateContainerByEnum[currentState];
 
@@ -33,39 +32,14 @@ namespace FSM_System
 
             currentStateObject.Update();
 
+
+
         }
 
         protected void AddState<TState>(TState stateObject, T enumStateType) where TState : FSM_State<T>
         {
 
-            var stateType = typeof(TState);
-
-            if (stateContainerByEnum.ContainsKey(enumStateType))
-            {
-
-                Debug.LogError("키가 중복됨");
-
-            }
-            else
-            {
-
-                stateContainerByEnum.Add(enumStateType, stateObject);
-
-            }
-
-            if (stateContainerByType.ContainsKey(stateType))
-            {
-
-                Debug.LogError("키가 중복됨");
-
-            }
-            else
-            {
-
-                stateContainerByType.Add(stateType, stateObject);
-
-            }
-
+            stateContainerByEnum.Add(enumStateType, stateObject);
 
         }
 
@@ -86,13 +60,6 @@ namespace FSM_System
         {
 
             return stateContainerByEnum[type];
-
-        }
-
-        public TState GetState<TState>() where TState : FSM_State<T>
-        {
-
-            return stateContainerByType[typeof(TState)] as TState;
 
         }
 
