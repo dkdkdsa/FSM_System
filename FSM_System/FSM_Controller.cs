@@ -10,9 +10,9 @@ namespace FSM_System
     public class FSM_Controller<T> : MonoBehaviour where T : Enum
     {
 
-        private Dictionary<T, FSM_State<T>> stateContainerByEnum = new Dictionary<T, FSM_State<T>>();
+        private Dictionary<T, List<FSM_State<T>>> stateContainerByEnum = new Dictionary<T, List<FSM_State<T>>>();
 
-        private FSM_State<T> currentStateObject => stateContainerByEnum[currentState];
+        private List<FSM_State<T>> currentStateObjects => stateContainerByEnum[currentState];
 
         protected T currentState;
 
@@ -30,16 +30,32 @@ namespace FSM_System
         protected virtual void Update()
         {
 
-            currentStateObject.Update();
+            foreach(var state in currentStateObjects)
+            {
 
+                state.Update();
+
+            }
 
 
         }
 
-        protected void AddState<TState>(TState stateObject, T enumStateType) where TState : FSM_State<T>
+        public void AddState<TState>(TState stateObject, T enumStateType) where TState : FSM_State<T>
         {
 
-            stateContainerByEnum.Add(enumStateType, stateObject);
+            if (stateContainerByEnum.ContainsKey(enumStateType))
+            {
+
+                stateContainerByEnum[enumStateType].Add(stateObject);
+
+            }
+            else
+            {
+
+                stateContainerByEnum.Add(enumStateType, new List<FSM_State<T>>{stateObject});
+
+            }
+
 
         }
 
@@ -48,15 +64,27 @@ namespace FSM_System
 
             var oldState = state;
 
-            currentStateObject.Exit();
+            foreach (var stateObj in currentStateObjects)
+            {
+
+                stateObj.Exit();
+
+            }
+
             currentState = state;
-            currentStateObject.Enter();
+
+            foreach (var stateObj in currentStateObjects)
+            {
+
+                stateObj.Enter();
+
+            }
 
             OnStateChanged?.Invoke(oldState, state);
 
         }
 
-        public FSM_State<T> GetState(T type) 
+        public List<FSM_State<T>> GetState(T type) 
         {
 
             return stateContainerByEnum[type];
