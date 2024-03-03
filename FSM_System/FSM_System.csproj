@@ -57,6 +57,7 @@
     <Compile Include="FSM_Helper.cs" />
     <Compile Include="FSM_State_Netcode.cs" />
     <Compile Include="FSM_Transition.cs" />
+    <Compile Include="FSM_Transition_Netcode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FSM_State.cs" />
   </ItemGroup>
