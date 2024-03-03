@@ -13,7 +13,7 @@ namespace FSM_System.Netcode
     {
 
 
-        private HashSet<FSM_Transition<T>> transitionContainer = new HashSet<FSM_Transition<T>>();
+        private HashSet<FSM_Transition_Netcode<T>> transitionContainer = new HashSet<FSM_Transition_Netcode<T>>();
 
         protected Transform transform;
         protected GameObject gameObject;
@@ -95,7 +95,7 @@ namespace FSM_System.Netcode
         protected virtual void ExitState() { }
         protected virtual void UpdateState() { }
 
-        public void AddTransition(FSM_Transition<T> transition)
+        public void AddTransition(FSM_Transition_Netcode<T> transition)
         {
 
             transitionContainer.Add(transition);
